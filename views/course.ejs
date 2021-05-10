@@ -18,8 +18,10 @@
 						</div>
 						<div class="post-content">
 							<div class="post-date">
-								<span class="day">30</span>
-								<span class="month">Nov</span>
+								<form method="POST" action="/courses/enroll">
+									<input type="hidden" name="course_id" value="<%= course._id %>">
+									<button class="btn btn-lg btn-warning text-white"><span>ENROLL</span></button>
+								</form>
 							</div>
 							<div class="meta-info-blog">
 								<span><i class="fa fa-calendar"></i> <a href="#">May 11, 2015</a> </span>
