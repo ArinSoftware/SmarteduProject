@@ -38,7 +38,7 @@
 									</div>
 									<div class="course-br">
 										<div class="course-title">
-											<h2><a href="course-single.html" title=""><%= user.courses[i].name %> </a></h2>
+											<h2><a href="/courses/<%= user.courses[i].slug %>" title=""><%= user.courses[i].name %> </a></h2>
 										</div>
 										<div class="course-desc">
 											<p><%= user.courses[i].description %> </p>
@@ -61,144 +61,144 @@
 
 			<% } %>
 
-					<% if(user.role==='teacher' ) { %>
+			<% if(user.role==='teacher' ) { %>
 
-						<div class="all-title-box">
-							<div class="container text-center">
-								<h1>
-									<%= user.name %><span class="m_1">TEACHER</span>
-								</h1>
-							</div>
+			<div class="all-title-box">
+				<div class="container text-center">
+					<h1>
+						<%= user.name %><span class="m_1">TEACHER</span>
+					</h1>
+				</div>
+			</div>
+
+			<div id="overviews" class="section wb">
+				<div class="container">
+					<div class="row">
+						<% if (flashMessages) { %>
+
+							<% if (flashMessages.success) { %>
+								<div class="alert alert-success">
+									<%= flashMessages.success %>
+								</div>
+		
+							<% } else if (flashMessages.error) { %>
+								<div class="alert alert-danger">
+									<%= flashMessages.error %>
+								</div>
+							<% } %>
+		
+						<% } %>
+
+						<!-- Modal Button -->
+						<div class="col-lg-12 text-center ">
+							<button class="btn btn-lg btn-warning rounded-0 text-white" href="#"
+								data-toggle="modal" data-target="#addCourse"><span>CREATE NEW
+									COURSE</span></button>
 						</div>
 
-						<div id="overviews" class="section wb">
-							<div class="container">
-								<div class="row">
-									<% if (flashMessages) { %>
 
-										<% if (flashMessages.success) { %>
-											<div class="alert alert-success">
-												<%= flashMessages.success %>
-											</div>
-					
-										<% } else if (flashMessages.error) { %>
-											<div class="alert alert-danger">
-												<%= flashMessages.error %>
-											</div>
-										<% } %>
-					
-									<% } %>
+						<div class="col-lg-12 blog-post-single">
+							<div class="blog-author">
+								<div class="author-bio">
+									<h3 class="author_name">COURSE FROM: <%= user.name %></h3>
+								</div>
+							</div>
 
-									<!-- Modal Button -->
-									<div class="col-lg-12 text-center ">
-										<button class="btn btn-lg btn-warning rounded-0 text-white" href="#"
-											data-toggle="modal" data-target="#addCourse"><span>CREATE NEW
-												COURSE</span></button>
+						</div><!-- end col -->
+					</div><!-- end row -->
+					<div class="row mt-5">
+
+						<% for (let i=0; i< courses.length; i++) { %>
+						<div class="col-lg-6 col-md-6 col-12">
+							<div class="course-item mb-5">
+								<div class="image-blog">
+									<img src="/images/blog_1.jpg" alt="" class="img-fluid">
+								</div>
+								<div class="course-br">
+									<div class="course-title">
+										<h2><a href="/courses/<%= courses[i].slug %>" title=""><%= courses[i].name %></a></h2>
 									</div>
-
-
-									<div class="col-lg-12 blog-post-single">
-										<div class="blog-author">
-											<div class="author-bio">
-												<h3 class="author_name">COURSE FROM: <%= user.name %></h3>
-											</div>
-										</div>
-
-									</div><!-- end col -->
-								</div><!-- end row -->
-								<div class="row mt-5">
-
-									<% for (let i=0; i< courses.length; i++) { %>
-									<div class="col-lg-6 col-md-6 col-12">
-										<div class="course-item mb-5">
-											<div class="image-blog">
-												<img src="/images/blog_1.jpg" alt="" class="img-fluid">
-											</div>
-											<div class="course-br">
-												<div class="course-title">
-													<h2><a href="/courses/<%= courses[i].slug %>" title=""><%= courses[i].name %></a></h2>
-												</div>
-												<div class="course-desc">
-													<p><%= courses[i].description %> </p>
-												</div>
-												<div class="clearfix">
-													<ul style="list-style-type: none;">
-														<li style="float: left;"><button class="btn btn-primary rounded-0 text-white"
-															data-toggle="modal" data-target="#updateCourse<%= courses[i]._id %>"
-															><span>UPDATE</span></button></li>
-														<li style="float: right;"><a href="/courses/<%= courses[i].slug %>?_method=DELETE" 
-															onclick="return confirm('ARE YOU SURE')"
-															class="btn btn-danger rounded-0 text-white"><span>DELETE</span></a></li>
-													</ul>
-												</div>
-											</div>
-										</div>
-									</div><!-- end col -->
+									<div class="course-desc">
+										<p><%= courses[i].description %> </p>
+									</div>
+									<div class="clearfix">
+										<ul style="list-style-type: none;">
+											<li style="float: left;"><button class="btn btn-primary rounded-0 text-white"
+												data-toggle="modal" data-target="#updateCourse<%= courses[i]._id %>"
+												><span>UPDATE</span></button></li>
+											<li style="float: right;"><a href="/courses/<%= courses[i].slug %>?_method=DELETE" 
+												onclick="return confirm('ARE YOU SURE')"
+												class="btn btn-danger rounded-0 text-white"><span>DELETE</span></a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div><!-- end col -->
 
 <!-- UPDATE Modal -->
 <div class="modal fade" id="updateCourse<%= courses[i]._id %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-		<div class="modal-content">
-			<div class="modal-body customer-box">
-				<!-- Tab panes -->
-				<div class="tab-content">
-					<div class="tab-pane active" id="Login">
-						<form method="POST" action="/courses/<%= courses[i].slug %>?_method=PUT" class="form-horizontal">
-							<div class="form-group">
-								<div class="col-sm-12">
-									<input type="text" name="name" value="<%= courses[i].name %>" class="form-control"  placeholder="Course Name">
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="col-sm-12">
-									<input type="hidden" name="role" class="form-control"  value="<%= user.role %>">
-								</div>
-							</div>
-
-							<div class="form-group">
-								<div class="col-sm-12">
-									<textarea rows="8" name="description" class="form-control"
-									placeholder="Course Description" required><%= courses[i].description %></textarea>
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="col-sm-12">
-									<select class="form-control" name="category">
-										<% for (let i=0; i< categories.length; i++) { %>
-										<option value="<%= categories[i]._id %>"><%= categories[i].name %></option>
-										<% } %>	
-									</select>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-sm-10">
-									<button type="submit" class="btn btn-light btn-radius btn-brd grd1">
-										Submit
-									</button>
-									<button type="submit" class="btn btn-light btn-radius btn-brd grd1"
-										data-dismiss="modal" aria-hidden="true">
-										Cancel
-									</button>
-								</div>
-							</div>
-						</form>
+<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+<div class="modal-content">
+<div class="modal-body customer-box">
+	<!-- Tab panes -->
+	<div class="tab-content">
+		<div class="tab-pane active" id="Login">
+			<form method="POST" action="/courses/<%= courses[i].slug %>?_method=PUT" class="form-horizontal">
+				<div class="form-group">
+					<div class="col-sm-12">
+						<input type="text" name="name" value="<%= courses[i].name %>" class="form-control"  placeholder="Course Name">
 					</div>
 				</div>
-			</div>
+				<div class="form-group">
+					<div class="col-sm-12">
+						<input type="hidden" name="role" class="form-control"  value="<%= user.role %>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-sm-12">
+						<textarea rows="8" name="description" class="form-control"
+						placeholder="Course Description" required><%= courses[i].description %></textarea>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-12">
+						<select class="form-control" name="category">
+							<% for (let i=0; i< categories.length; i++) { %>
+							<option value="<%= categories[i]._id %>"><%= categories[i].name %></option>
+							<% } %>	
+						</select>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-10">
+						<button type="submit" class="btn btn-light btn-radius btn-brd grd1">
+							Submit
+						</button>
+						<button type="submit" class="btn btn-light btn-radius btn-brd grd1"
+							data-dismiss="modal" aria-hidden="true">
+							Cancel
+						</button>
+					</div>
+				</div>
+			</form>
 		</div>
 	</div>
 </div>
+</div>
+</div>
+</div>
 
-									<% } %>
+						<% } %>
 
-								</div><!-- end row -->
-							</div><!-- end container -->
-						</div><!-- end section -->
+					</div><!-- end row -->
+				</div><!-- end container -->
+			</div><!-- end section -->
 
-<!-- ADD Modal -->
-<div class="modal fade" id="addCourse" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-		<div class="modal-content">
+			<!-- ADD Modal -->
+			<div class="modal fade" id="addCourse" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+			<div class="modal-content">
 			<div class="modal-body customer-box">
 				<!-- Tab panes -->
 				<div class="tab-content">
@@ -245,13 +245,67 @@
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
-</div>
+			</div>
+			</div>
+			</div>
 
-						<% } %>
+			<% } %>
 
+			<% if(user.role==='admin' ) { %>
 
+				<div class="all-title-box">
+					<div class="container text-center">
+						<h1>
+							<%= user.name %><span class="m_1">ADMIN</span>
+						</h1>
+					</div>
+				</div>
+
+				<div id="overviews" class="section wb">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-12 blog-post-single">
+								<div class="blog-author">
+									<div class="author-bio">
+										<h3 class="author_name"><a href="#"> Courses Enrolled by:  <%= user.name %></a></h3>
+
+									</div>
+								</div>
+
+							</div><!-- end col -->
+						</div><!-- end row -->
+						<div class="row mt-5">
+
+							<table class="table">
+								<thead>
+								  <tr>
+									<th scope="col">ID#</th>
+									<th scope="col">Email</th>
+									<th scope="col">Role</th>
+									<th scope="col">Delete</th>
+								  </tr>
+								</thead>
+								<tbody>
+							<% for (let i=0; i< users.length; i++) { %>
+								  <tr>
+									<th scope="row"><%=users[i]._id %></th>
+									<td><%=users[i].email %></td>
+									<td><%=users[i].role %></td>
+									<td><a href="/users/<%= users[i]._id %>?_method=DELETE" 
+										onclick="return confirm('ARE YOU SURE')"
+										class="btn btn-danger rounded-0 text-white"><span>DELETE</span></a></td>
+								  </tr>
 							<% } %>
+								</tbody>
+							  </table>
 
-								<%- include('partials/_footer'); %>
+						</div><!-- end row -->
+					</div><!-- end container -->
+				</div><!-- end section -->
+
+			<% } %>
+
+
+		<% } %>
+
+<%- include('partials/_footer'); %>
